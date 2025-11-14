@@ -1,6 +1,6 @@
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
-import { Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Image, ActivityIndicator } from "react-native";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "../../assets/styles/auth.styles";
@@ -14,10 +14,14 @@ export default function Page() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded || isSigningIn) return;
+
+    setIsSigningIn(true);
+    setError("");
 
     // Start the sign-in process using the email and password provided
     try {
@@ -34,14 +38,19 @@ export default function Page() {
       } else {
         // If the status isn't complete, check why. User might need to
         // complete further steps.
+        setError("Sign in incomplete. Please try again.");
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
       if (err.errors?.[0]?.code === "form_password_incorrect") {
         setError("Password is incorrect. Please try again.");
+      } else if (err.errors?.[0]?.code === "form_identifier_not_found") {
+        setError("No account found with that email.");
       } else {
         setError("An error occurred. Please try again.");
       }
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -74,6 +83,7 @@ export default function Page() {
           placeholder="Enter email"
           placeholderTextColor="#9A8478"
           onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+          editable={!isSigningIn}
         />
 
         <TextInput
@@ -83,10 +93,19 @@ export default function Page() {
           placeholderTextColor="#9A8478"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
+          editable={!isSigningIn}
         />
 
-        <TouchableOpacity style={styles.button} onPress={onSignInPress}>
-          <Text style={styles.buttonText}>Sign In</Text>
+        <TouchableOpacity 
+          style={[styles.button, isSigningIn && styles.buttonDisabled]} 
+          onPress={onSignInPress}
+          disabled={isSigningIn}
+        >
+          {isSigningIn ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={styles.buttonText}>Sign In</Text>
+          )}
         </TouchableOpacity>
 
         <View style={styles.footerContainer}>

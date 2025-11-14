@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { styles } from "@/assets/styles/auth.styles.js";
@@ -17,10 +17,15 @@ export default function SignUpScreen() {
   const [pendingVerification, setPendingVerification] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   // Handle submission of sign-up form
   const onSignUpPress = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded || isSigningUp) return;
+
+    setIsSigningUp(true);
+    setError("");
 
     // Start sign-up process using email and password provided
     try {
@@ -42,12 +47,17 @@ export default function SignUpScreen() {
         setError("An error occurred. Please try again.");
       }
       console.log(err);
+    } finally {
+      setIsSigningUp(false);
     }
   };
 
   // Handle submission of verification form
   const onVerifyPress = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded || isVerifying) return;
+
+    setIsVerifying(true);
+    setError("");
 
     try {
       // Use the code the user provided to attempt verification
@@ -63,12 +73,20 @@ export default function SignUpScreen() {
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.
+        setError("Verification incomplete. Please try again.");
         console.error(JSON.stringify(signUpAttempt, null, 2));
       }
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+      if (err.errors?.[0]?.code === "form_code_incorrect") {
+        setError("Incorrect verification code. Please try again.");
+      } else {
+        setError("An error occurred during verification. Please try again.");
+      }
       console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -93,10 +111,19 @@ export default function SignUpScreen() {
           placeholder="Enter your verification code"
           placeholderTextColor="#9A8478"
           onChangeText={(code) => setCode(code)}
+          editable={!isVerifying}
         />
 
-        <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
-          <Text style={styles.buttonText}>Verify</Text>
+        <TouchableOpacity 
+          onPress={onVerifyPress} 
+          style={[styles.button, isVerifying && styles.buttonDisabled]}
+          disabled={isVerifying}
+        >
+          {isVerifying ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={styles.buttonText}>Verify</Text>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -131,6 +158,7 @@ export default function SignUpScreen() {
           placeholderTextColor="#9A8478"
           placeholder="Enter email"
           onChangeText={(email) => setEmailAddress(email)}
+          editable={!isSigningUp}
         />
 
         <TextInput
@@ -140,10 +168,19 @@ export default function SignUpScreen() {
           placeholderTextColor="#9A8478"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
+          editable={!isSigningUp}
         />
 
-        <TouchableOpacity style={styles.button} onPress={onSignUpPress}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <TouchableOpacity 
+          style={[styles.button, isSigningUp && styles.buttonDisabled]} 
+          onPress={onSignUpPress}
+          disabled={isSigningUp}
+        >
+          {isSigningUp ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={styles.buttonText}>Sign Up</Text>
+          )}
         </TouchableOpacity>
 
         <View style={styles.footerContainer}>
