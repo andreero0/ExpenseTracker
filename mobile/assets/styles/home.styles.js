@@ -69,6 +69,16 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 4,
   },
+  importButton: {
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: COLORS.card,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
   logoutButton: {
     padding: 10,
     borderRadius: 20,

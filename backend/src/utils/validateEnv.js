@@ -36,5 +36,11 @@ export function validateEnv() {
     console.warn(`   Expected one of: ${validEnvs.join(', ')}\n`);
   }
 
+  // Optional: Check for OPENAI_API_KEY (for statement import feature)
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('\n⚠️  Warning: OPENAI_API_KEY not set.');
+    console.warn('   Statement import will use fallback parser instead of AI.\n');
+  }
+
   console.log('✅ Environment variables validated successfully');
 }
