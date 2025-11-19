@@ -7,7 +7,7 @@ import { API_URL } from "../constants/api";
 // const API_URL = "https://wallet-api-cxqp.onrender.com/api";
 // const API_URL = "http://localhost:5001/api";
 
-export const useTransactions = (userId) => {
+export const useTransactions = (userId, filters = {}) => {
   const [transactions, setTransactions] = useState([]);
   const [summary, setSummary] = useState({
     balance: 0,
@@ -19,13 +19,28 @@ export const useTransactions = (userId) => {
   // useCallback is used for performance reasons, it will memoize the function
   const fetchTransactions = useCallback(async () => {
     try {
-      const response = await fetch(`${API_URL}/transactions/${userId}`);
+      // Build query string from filters
+      const queryParams = new URLSearchParams();
+      if (filters.category) {
+        queryParams.append("category", filters.category);
+      }
+      if (filters.startDate) {
+        queryParams.append("startDate", filters.startDate);
+      }
+      if (filters.endDate) {
+        queryParams.append("endDate", filters.endDate);
+      }
+
+      const queryString = queryParams.toString();
+      const url = `${API_URL}/transactions/${userId}${queryString ? `?${queryString}` : ""}`;
+
+      const response = await fetch(url);
       const data = await response.json();
       setTransactions(data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
     }
-  }, [userId]);
+  }, [userId, filters]);
 
   const fetchSummary = useCallback(async () => {
     try {

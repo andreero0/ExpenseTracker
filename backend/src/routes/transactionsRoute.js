@@ -4,6 +4,7 @@ import {
   deleteTransaction,
   getSummaryByUserId,
   getTransactionsByUserId,
+  updateTransaction,
 } from "../controllers/transactionsController.js";
 import { validateUserId } from "../middleware/auth.js";
 
@@ -13,6 +14,7 @@ const router = express.Router();
 router.get("/summary/:userId", validateUserId, getSummaryByUserId);
 router.get("/:userId", validateUserId, getTransactionsByUserId);
 router.post("/", validateUserId, createTransaction);
+router.put("/:id", updateTransaction);
 router.delete("/:id", deleteTransaction);
 
 export default router;

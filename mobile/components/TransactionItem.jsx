@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { styles } from "../assets/styles/home.styles";
 import { COLORS } from "../constants/colors";
 import { formatDate } from "../lib/utils";
@@ -16,8 +17,21 @@ const CATEGORY_ICONS = {
 };
 
 export const TransactionItem = ({ item, onDelete }) => {
+  const router = useRouter();
   const isIncome = parseFloat(item.amount) > 0;
   const iconName = CATEGORY_ICONS[item.category] || "pricetag-outline";
+
+  const handleEdit = () => {
+    router.push({
+      pathname: `/edit/${item.id}`,
+      params: {
+        id: item.id,
+        title: item.title,
+        amount: item.amount,
+        category: item.category,
+      },
+    });
+  };
 
   return (
     <View style={styles.transactionCard} key={item.id}>
@@ -38,9 +52,14 @@ export const TransactionItem = ({ item, onDelete }) => {
           <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(item.id)}>
-        <Ionicons name="trash-outline" size={20} color={COLORS.expense} />
-      </TouchableOpacity>
+      <View style={styles.actionButtons}>
+        <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
+          <Ionicons name="create-outline" size={20} color={COLORS.primary} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(item.id)}>
+          <Ionicons name="trash-outline" size={20} color={COLORS.expense} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

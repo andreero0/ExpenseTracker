@@ -10,14 +10,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { BalanceCard } from "../../components/BalanceCard";
 import { TransactionItem } from "../../components/TransactionItem";
 import NoTransactionsFound from "../../components/NoTransactionsFound";
+import { FilterModal } from "../../components/FilterModal";
+import { COLORS } from "../../constants/colors";
 
 export default function Page() {
   const { user } = useUser();
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({});
 
   const { transactions, summary, isLoading, loadData, deleteTransaction } = useTransactions(
-    user.id
+    user.id,
+    activeFilters
   );
 
   const onRefresh = async () => {
@@ -36,6 +41,13 @@ export default function Page() {
       { text: "Delete", style: "destructive", onPress: () => deleteTransaction(id) },
     ]);
   };
+
+  const handleApplyFilters = (filters) => {
+    setActiveFilters(filters);
+  };
+
+  const hasActiveFilters = Object.keys(activeFilters).length > 0 &&
+    (activeFilters.category || activeFilters.datePreset !== "all");
 
   if (isLoading && !refreshing) return <PageLoader />;
 
@@ -72,6 +84,17 @@ export default function Page() {
 
         <View style={styles.transactionsHeaderContainer}>
           <Text style={styles.sectionTitle}>Recent Transactions</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, hasActiveFilters && styles.filterButtonActive]}
+            onPress={() => setShowFilterModal(true)}
+          >
+            <Ionicons
+              name="funnel"
+              size={18}
+              color={hasActiveFilters ? COLORS.white : COLORS.text}
+            />
+            {hasActiveFilters && <View style={styles.filterBadge} />}
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -85,6 +108,13 @@ export default function Page() {
         ListEmptyComponent={<NoTransactionsFound />}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      />
+
+      <FilterModal
+        visible={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        onApply={handleApplyFilters}
+        initialFilters={activeFilters}
       />
     </View>
   );

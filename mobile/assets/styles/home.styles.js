@@ -186,10 +186,18 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.textLight,
   },
-  deleteButton: {
-    padding: 15,
+  actionButtons: {
+    flexDirection: "row",
     borderLeftWidth: 1,
     borderLeftColor: COLORS.border,
+  },
+  editButton: {
+    padding: 15,
+    borderRightWidth: 1,
+    borderRightColor: COLORS.border,
+  },
+  deleteButton: {
+    padding: 15,
   },
   transactionsContainer: {
     marginBottom: 20,
@@ -253,6 +261,37 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     paddingBottom: 5,
+  },
+  filterButton: {
+    padding: 10,
+    borderRadius: 12,
+    backgroundColor: COLORS.card,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+    position: "relative",
+  },
+  filterButtonActive: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  filterBadge: {
+    position: "absolute",
+    top: 6,
+    right: 6,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.expense,
+    borderWidth: 2,
+    borderColor: COLORS.white,
   },
   transactionsList: {
     flex: 1,

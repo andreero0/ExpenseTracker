@@ -44,6 +44,21 @@ export async function initDB() {
     // Create composite index for user_id + created_at (optimizes sorted queries)
     await sql`CREATE INDEX IF NOT EXISTS idx_transactions_user_created ON transactions(user_id, created_at DESC)`;
 
+    // Create budgets table
+    await sql`CREATE TABLE IF NOT EXISTS budgets(
+      id SERIAL PRIMARY KEY,
+      user_id VARCHAR(255) NOT NULL,
+      category VARCHAR(255) NOT NULL,
+      amount DECIMAL(10,2) NOT NULL,
+      period VARCHAR(50) NOT NULL DEFAULT 'monthly',
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(user_id, category, period)
+    )`;
+
+    // Create index on user_id for budgets
+    await sql`CREATE INDEX IF NOT EXISTS idx_budgets_user_id ON budgets(user_id)`;
+
     console.log("Database initialized successfully");
   } catch (error) {
     console.log("Error initializing DB", error);
