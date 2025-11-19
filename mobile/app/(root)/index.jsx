@@ -11,11 +11,12 @@ import { BalanceCard } from "../../components/BalanceCard";
 import { TransactionItem } from "../../components/TransactionItem";
 import NoTransactionsFound from "../../components/NoTransactionsFound";
 import { FilterModal } from "../../components/FilterModal";
-import { COLORS } from "../../constants/colors";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function Page() {
   const { user } = useUser();
   const router = useRouter();
+  const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [activeFilters, setActiveFilters] = useState({});
@@ -72,11 +73,14 @@ export default function Page() {
           </View>
           {/* RIGHT */}
           <View style={styles.headerRight}>
+            <TouchableOpacity style={styles.importButton} onPress={() => router.push("/settings")}>
+              <Ionicons name="settings-outline" size={18} color={colors.primary} />
+            </TouchableOpacity>
             <TouchableOpacity style={styles.importButton} onPress={() => router.push("/analytics")}>
-              <Ionicons name="analytics-outline" size={18} color={COLORS.primary} />
+              <Ionicons name="analytics-outline" size={18} color={colors.primary} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.importButton} onPress={() => router.push("/import")}>
-              <Ionicons name="cloud-upload-outline" size={18} color={COLORS.primary} />
+              <Ionicons name="cloud-upload-outline" size={18} color={colors.primary} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.addButton} onPress={() => router.push("/create")}>
               <Ionicons name="add" size={20} color="#FFF" />
@@ -97,7 +101,7 @@ export default function Page() {
             <Ionicons
               name="funnel"
               size={18}
-              color={hasActiveFilters ? COLORS.white : COLORS.text}
+              color={hasActiveFilters ? colors.white : colors.text}
             />
             {hasActiveFilters && <View style={styles.filterBadge} />}
           </TouchableOpacity>

@@ -59,6 +59,29 @@ export async function initDB() {
     // Create index on user_id for budgets
     await sql`CREATE INDEX IF NOT EXISTS idx_budgets_user_id ON budgets(user_id)`;
 
+    // Create recurring_transactions table
+    await sql`CREATE TABLE IF NOT EXISTS recurring_transactions(
+      id SERIAL PRIMARY KEY,
+      user_id VARCHAR(255) NOT NULL,
+      title VARCHAR(255) NOT NULL,
+      amount DECIMAL(10,2) NOT NULL,
+      category VARCHAR(255) NOT NULL,
+      frequency VARCHAR(50) NOT NULL,
+      start_date TIMESTAMP NOT NULL,
+      end_date TIMESTAMP,
+      next_occurrence TIMESTAMP NOT NULL,
+      last_processed TIMESTAMP,
+      is_active BOOLEAN DEFAULT true,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )`;
+
+    // Create index on user_id for recurring transactions
+    await sql`CREATE INDEX IF NOT EXISTS idx_recurring_user_id ON recurring_transactions(user_id)`;
+
+    // Create index for active recurring transactions
+    await sql`CREATE INDEX IF NOT EXISTS idx_recurring_active ON recurring_transactions(is_active, next_occurrence)`;
+
     console.log("Database initialized successfully");
   } catch (error) {
     console.log("Error initializing DB", error);

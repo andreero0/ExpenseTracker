@@ -51,6 +51,37 @@ A modern, feature-rich expense tracking application with artificial intelligence
 - **Clerk Integration**: Enterprise-grade auth
 - **Protected Routes**: Secure API endpoints
 - **Rate Limiting**: DDoS protection with Redis
+- **Biometric Auth**: Face ID / Touch ID support (v1.1)
+
+### 🎨 Customization (v1.1)
+- **Dark Mode**: Beautiful dark variants for all 4 themes
+- **Multi-Currency**: Support for 12 major global currencies
+- **Theme Persistence**: Your preferences saved automatically
+- **Adaptive UI**: Status bar and colors adjust to theme
+
+### 🔄 Automation (v1.1)
+- **Recurring Transactions**: Auto-create regular expenses/income
+- **Flexible Schedules**: Daily, weekly, bi-weekly, monthly, quarterly, yearly
+- **Smart Processing**: Cron jobs handle scheduling automatically
+- **Pause/Resume**: Full control over recurring items
+
+### 📴 Offline Support (v1.1)
+- **Work Offline**: Create transactions without internet
+- **Auto-Sync**: Automatic sync when connection restored
+- **Local Storage**: Secure on-device data persistence
+- **Sync Management**: Manual sync trigger and pending counter
+
+### 📤 Data Export (v1.1)
+- **CSV Export**: Download all transactions
+- **Share Anywhere**: Native share sheet integration
+- **Formatted Data**: Ready for Excel, Google Sheets
+- **PDF Coming Soon**: Formatted reports
+
+### 📸 Smart Capture (v1.1)
+- **Receipt Scanning**: OCR-ready with Google Vision integration
+- **Camera & Gallery**: Take photos or select existing
+- **Auto-Fill**: Extracted data pre-fills transaction form
+- **Setup Guide Included**: Complete integration documentation
 
 ---
 
@@ -218,6 +249,16 @@ POST   /api/statement/process             # Process PDF statement
 POST   /api/statement/import              # Batch import transactions
 ```
 
+### Recurring Transactions (v1.1)
+```
+GET    /api/recurring/:userId             # Get all recurring transactions
+POST   /api/recurring                     # Create recurring transaction
+PUT    /api/recurring/:id                 # Update recurring transaction
+DELETE /api/recurring/:id                 # Delete recurring transaction
+PATCH  /api/recurring/:id/toggle          # Toggle active status
+POST   /api/recurring/process             # Process due transactions (cron)
+```
+
 ---
 
 ## 📚 Documentation
@@ -225,6 +266,9 @@ POST   /api/statement/import              # Batch import transactions
 - **[User Guide](USER_GUIDE.md)** - Complete user documentation
 - **[Deployment Guide](DEPLOYMENT.md)** - Production deployment steps
 - **[Statement Import Setup](STATEMENT_IMPORT_SETUP.md)** - AI import configuration
+- **[v1.1 Release Notes](V1.1_RELEASE_NOTES.md)** - What's new in v1.1
+- **[Installation Guide](INSTALL_DEPENDENCIES.md)** - v1.1 dependencies setup
+- **[Plaid Integration](PLAID_INTEGRATION.md)** - Bank connections guide
 
 ---
 
@@ -239,23 +283,28 @@ POST   /api/statement/import              # Batch import transactions
 - [x] AI-powered statement import
 - [x] Duplicate detection
 
-### 🚧 In Progress (v1.1)
-- [ ] OCR for receipt photos (Google Vision)
-- [ ] Bank connections via Plaid
-- [ ] Recurring transactions automation
-- [ ] CSV/PDF export
-- [ ] Multi-currency support
-- [ ] Dark mode
-- [ ] Biometric authentication
-- [ ] Offline mode with sync
+### ✅ Completed (v1.1) - **NEW!**
+- [x] 🌙 **Dark Mode** - 4 beautiful dark theme variants
+- [x] 🔐 **Biometric Authentication** - Face ID / Touch ID support
+- [x] 🔄 **Recurring Transactions** - Automated regular expenses
+- [x] 💱 **Multi-Currency Support** - 12 major currencies
+- [x] 📊 **CSV/PDF Export** - Export transaction history
+- [x] 📸 **OCR Receipt Scanning** - Google Vision integration ready
+- [x] 📴 **Offline Mode** - Work without internet connection
+- [x] 🏦 **Plaid Integration Guide** - Bank connections documentation
 
-### 📅 Planned (v2.0)
+**See [V1.1_RELEASE_NOTES.md](V1.1_RELEASE_NOTES.md) for details**
+
+### 📅 Planned (v1.2)
 - [ ] Shared budgets (family accounts)
 - [ ] Push notifications for alerts
 - [ ] Savings goals tracking
 - [ ] Bill payment reminders
 - [ ] Tax category tagging
 - [ ] Investment portfolio tracking
+- [ ] Custom categories
+- [ ] Receipt attachment storage
+- [ ] Advanced AI insights
 
 ---
 
