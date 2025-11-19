@@ -5,12 +5,14 @@ import {
   getSummaryByUserId,
   getTransactionsByUserId,
 } from "../controllers/transactionsController.js";
+import { validateUserId } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:userId", getTransactionsByUserId);
-router.post("/", createTransaction);
+// Specific routes must come before generic parameterized routes
+router.get("/summary/:userId", validateUserId, getSummaryByUserId);
+router.get("/:userId", validateUserId, getTransactionsByUserId);
+router.post("/", validateUserId, createTransaction);
 router.delete("/:id", deleteTransaction);
-router.get("/summary/:userId", getSummaryByUserId);
 
 export default router;

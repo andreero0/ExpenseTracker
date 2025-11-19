@@ -84,7 +84,7 @@ export async function getSummaryByUserId(req, res) {
       expenses: expensesResult[0].expenses,
     });
   } catch (error) {
-    console.log("Error gettin the summary", error);
+    console.log("Error getting the summary", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
