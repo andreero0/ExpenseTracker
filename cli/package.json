@@ -1,0 +1,36 @@
+{
+  "name": "@andreero0/create-app-scaffold",
+  "version": "1.0.0",
+  "description": "CLI tool to scaffold new React Native apps with modern tech stack",
+  "main": "index.js",
+  "bin": {
+    "create-app-scaffold": "./index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node index.js test-app"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "scaffold",
+    "template",
+    "cli",
+    "supabase",
+    "fastapi"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^10.2.2",
+    "ora": "^8.1.1",
+    "execa": "^9.5.1",
+    "fs-extra": "^11.2.0",
+    "validate-npm-package-name": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
