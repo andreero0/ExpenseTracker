@@ -72,6 +72,9 @@ export default function Page() {
           </View>
           {/* RIGHT */}
           <View style={styles.headerRight}>
+            <TouchableOpacity style={styles.importButton} onPress={() => router.push("/analytics")}>
+              <Ionicons name="analytics-outline" size={18} color={COLORS.primary} />
+            </TouchableOpacity>
             <TouchableOpacity style={styles.importButton} onPress={() => router.push("/import")}>
               <Ionicons name="cloud-upload-outline" size={18} color={COLORS.primary} />
             </TouchableOpacity>

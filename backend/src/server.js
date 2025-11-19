@@ -8,6 +8,7 @@ import { validateEnv } from "./utils/validateEnv.js";
 import transactionsRoute from "./routes/transactionsRoute.js";
 import budgetsRoute from "./routes/budgetsRoute.js";
 import statementRoute from "./routes/statementRoute.js";
+import analyticsRoute from "./routes/analyticsRoute.js";
 import job from "./config/cron.js";
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/transactions", transactionsRoute);
 app.use("/api/budgets", budgetsRoute);
 app.use("/api/statement", statementRoute);
+app.use("/api/analytics", analyticsRoute);
 
 initDB().then(() => {
   app.listen(PORT, () => {

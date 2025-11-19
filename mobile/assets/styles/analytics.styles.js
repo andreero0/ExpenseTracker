@@ -1,0 +1,197 @@
+import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/colors";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+  content: {
+    padding: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.background,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: COLORS.textLight,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    paddingTop: 40,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: COLORS.text,
+  },
+  refreshButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: COLORS.card,
+  },
+  periodSelector: {
+    flexDirection: "row",
+    backgroundColor: COLORS.card,
+    borderRadius: 12,
+    padding: 4,
+    marginBottom: 20,
+  },
+  periodButton: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  periodButtonActive: {
+    backgroundColor: COLORS.primary,
+  },
+  periodButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: COLORS.text,
+  },
+  periodButtonTextActive: {
+    color: COLORS.white,
+  },
+  statsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
+    marginBottom: 20,
+  },
+  statCard: {
+    flex: 1,
+    minWidth: "47%",
+    backgroundColor: COLORS.card,
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  statIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.background,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: COLORS.textLight,
+    marginBottom: 4,
+  },
+  statValue: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: COLORS.text,
+    marginBottom: 4,
+  },
+  statChange: {
+    fontSize: 11,
+    fontWeight: "500",
+  },
+  statSubtext: {
+    fontSize: 11,
+    color: COLORS.textLight,
+  },
+  chartCard: {
+    backgroundColor: COLORS.card,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  chartHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    gap: 8,
+  },
+  chartTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: COLORS.text,
+  },
+  emptyChart: {
+    backgroundColor: COLORS.card,
+    borderRadius: 16,
+    padding: 40,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  emptyChartText: {
+    marginTop: 12,
+    fontSize: 14,
+    color: COLORS.textLight,
+  },
+  breakdownCard: {
+    backgroundColor: COLORS.card,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  breakdownTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: COLORS.text,
+    marginBottom: 16,
+  },
+  breakdownItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  breakdownLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    flex: 1,
+  },
+  colorIndicator: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  breakdownCategory: {
+    fontSize: 14,
+    color: COLORS.text,
+    fontWeight: "500",
+  },
+  breakdownRight: {
+    alignItems: "flex-end",
+  },
+  breakdownAmount: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: COLORS.text,
+  },
+  breakdownPercentage: {
+    fontSize: 12,
+    color: COLORS.textLight,
+  },
+});
